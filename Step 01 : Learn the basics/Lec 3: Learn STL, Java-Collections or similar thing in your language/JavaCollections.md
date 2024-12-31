@@ -7,5 +7,4 @@
 - [**GFG**](https://www.geeksforgeeks.org/collections-in-java-2/)
 
 ### Videos Link:
-  - [**Riddhi Dutta**](https://www.youtube.com/watch?v=VE_AAUxTUCY)
-  - [**DurgaSoft**](https://www.youtube.com/watch?v=rI3VkItC0eA&list=PLd3UqWTnYXOkVR3OR9UZGyEt9RFUbaTMZ)
+  - [**Full Playlist**](https://youtube.com/playlist?list=PLLf2eaI4RaQ5HwVx8pLzHj2sd7m0JKXqN&si=IYnFe93rNnSxK65I)
