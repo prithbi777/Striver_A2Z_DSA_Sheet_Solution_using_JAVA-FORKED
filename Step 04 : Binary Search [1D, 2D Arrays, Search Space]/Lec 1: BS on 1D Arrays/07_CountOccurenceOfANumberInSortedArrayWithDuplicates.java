@@ -22,60 +22,86 @@ class Solution {
     }
     */
     
-    // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
-    int count(int[] arr, int n, int x) {
-        // Find the index of the first occurrence of 'x' in the array
-        int firstOccurrence = findFirstOccurrence(arr, n, x);
+//     // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     int count(int[] arr, int n, int x) {
+//         // Find the index of the first occurrence of 'x' in the array
+//         int firstOccurrence = findFirstOccurrence(arr, n, x);
         
-        // If 'x' is not present in the array, return 0
-        if (firstOccurrence == -1) {
-            return 0;
-        }
+//         // If 'x' is not present in the array, return 0
+//         if (firstOccurrence == -1) {
+//             return 0;
+//         }
         
-        // Find the index of the last occurrence of 'x' in the array
-        int lastOccurrence = findLastOccurrence(arr, n, x);
+//         // Find the index of the last occurrence of 'x' in the array
+//         int lastOccurrence = findLastOccurrence(arr, n, x);
         
-        // The count of 'x' is the difference between the indices of last and first occurrences, plus one
-        return lastOccurrence - firstOccurrence + 1;
-    }
+//         // The count of 'x' is the difference between the indices of last and first occurrences, plus one
+//         return lastOccurrence - firstOccurrence + 1;
+//     }
     
-    int findFirstOccurrence(int[] arr, int n, int x) {
-        int low = 0, high = n - 1;
-        int result = -1;
+//     int findFirstOccurrence(int[] arr, int n, int x) {
+//         int low = 0, high = n - 1;
+//         int result = -1;
         
-        while (low <= high) {
-            int mid = low + (high - low) / 2; // To avoid potential overflow
+//         while (low <= high) {
+//             int mid = low + (high - low) / 2; // To avoid potential overflow
             
-            if (arr[mid] == x) {
-                result = mid;  // Record the index of the first occurrence
-                high = mid - 1; // Move to the left half to find an earlier occurrence
-            } else if (arr[mid] < x) {
-                low = mid + 1;  // Move to the right half
-            } else {
-                high = mid - 1; // Move to the left half
-            }
-        }
+//             if (arr[mid] == x) {
+//                 result = mid;  // Record the index of the first occurrence
+//                 high = mid - 1; // Move to the left half to find an earlier occurrence
+//             } else if (arr[mid] < x) {
+//                 low = mid + 1;  // Move to the right half
+//             } else {
+//                 high = mid - 1; // Move to the left half
+//             }
+//         }
         
-        return result;  // Return the index of the first occurrence
-    }
+//         return result;  // Return the index of the first occurrence
+//     }
     
-    int findLastOccurrence(int[] arr, int n, int x) {
-        int low = 0, high = n - 1;
-        int result = -1;
+//     int findLastOccurrence(int[] arr, int n, int x) {
+//         int low = 0, high = n - 1;
+//         int result = -1;
         
-        while (low <= high) {
-            int mid = low + (high - low) / 2; // To avoid potential overflow
+//         while (low <= high) {
+//             int mid = low + (high - low) / 2; // To avoid potential overflow
             
-            if (arr[mid] == x) {
-                result = mid;  // Record the index of the last occurrence
-                low = mid + 1; // Move to the right half to find a later occurrence
-            } else if (arr[mid] < x) {
-                low = mid + 1;  // Move to the right half
-            } else {
-                high = mid - 1; // Move to the left half
-            }
-        }
+//             if (arr[mid] == x) {
+//                 result = mid;  // Record the index of the last occurrence
+//                 low = mid + 1; // Move to the right half to find a later occurrence
+//             } else if (arr[mid] < x) {
+//                 low = mid + 1;  // Move to the right half
+//             } else {
+//                 high = mid - 1; // Move to the left half
+//             }
+//         }
         
-        return result;  // Return the index of the last occurrence
+//         return result;  // Return the index of the last occurrence
+//     }
+// }
+
+
+
+
+
+    //RECURSIVE APPROACH
+    class Solution {
+    public int getocc(int[] arr, int left, int right, int target) {
+        if (left > right) return 0; // Base case: no elements left to check
+
+        int mid = left + (right - left) / 2;
+
+        // Count occurrences at the current position
+        int count = (arr[mid] == target) ? 1 : 0;
+
+        // Recur for left and right halves
+        count += getocc(arr, left, mid - 1, target);
+        count += getocc(arr, mid + 1, right, target);
+
+        return count;
+    }
+    int countFreq(int[] arr, int target) {
+       return getocc(arr, 0, arr.length-1, target);
     }
 }
+
