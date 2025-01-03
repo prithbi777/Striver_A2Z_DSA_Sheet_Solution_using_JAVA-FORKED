@@ -22,57 +22,89 @@ class Solution {
     }
     */
 
-    // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     public int findKRotation(List<Integer> arr) {
+//         // Initialize the low and high pointers
+//         int low = 0, high = arr.size() - 1; 
+        
+//         // Initialize ans to store the minimum value found
+//         int ans = Integer.MAX_VALUE; 
+        
+//         // Initialize index to store the rotation index
+//         int index = -1; 
+    
+//         // Binary search loop, continue until the low pointer crosses the high pointer
+//         while (low <= high) {
+//             // Calculate the mid index
+//             int mid = (low + high) / 2; 
+    
+//             // Check if the subarray between low and high is already sorted
+//             if (arr.get(low) <= arr.get(high)) {
+//                 // If sorted, check if the element at low is the minimum so far
+//                 if (arr.get(low) < ans) {
+//                     index = low; // Update the rotation index
+//                     ans = arr.get(low); // Update the minimum value found
+//                 }
+                
+//                 break; // Break the loop as the minimum element is found
+//             }
+    
+//             // Check if the left part of the array (from low to mid) is sorted
+//             if (arr.get(low) <= arr.get(mid)) {
+//                 // If sorted, check if the element at low is the minimum so far
+//                 if (arr.get(low) < ans) {
+//                     index = low; // Update the rotation index
+//                     ans = arr.get(low); // Update the minimum value found
+//                 }
+                
+//                 // Move the low pointer to mid + 1, discarding the left part
+//                 low = mid + 1;
+//             } else {
+//                 // If the right part of the array (from mid to high) is sorted
+//                 // Check if the element at mid is the minimum so far
+//                 if (arr.get(mid) < ans) {
+//                     index = mid; // Update the rotation index
+//                     ans = arr.get(mid); // Update the minimum value found
+//                 }
+                
+//                 // Move the high pointer to mid - 1, discarding the right part
+//                 high = mid - 1;
+//             }
+//         }
+    
+//         // Return the index of the smallest element, which represents the rotation count
+//         return index;
+//     }
+// }
+
+
+
+
+
+
+
+    //APPROACH-3(CODE REDUCED)
+    class Solution {
     public int findKRotation(List<Integer> arr) {
-        // Initialize the low and high pointers
-        int low = 0, high = arr.size() - 1; 
-        
-        // Initialize ans to store the minimum value found
-        int ans = Integer.MAX_VALUE; 
-        
-        // Initialize index to store the rotation index
-        int index = -1; 
-    
-        // Binary search loop, continue until the low pointer crosses the high pointer
-        while (low <= high) {
-            // Calculate the mid index
-            int mid = (low + high) / 2; 
-    
-            // Check if the subarray between low and high is already sorted
-            if (arr.get(low) <= arr.get(high)) {
-                // If sorted, check if the element at low is the minimum so far
-                if (arr.get(low) < ans) {
-                    index = low; // Update the rotation index
-                    ans = arr.get(low); // Update the minimum value found
+        int left = 0, right = arr.size()-1;
+        int ans = Integer.MAX_VALUE, totalRot = 0;
+        while(left<=right){
+
+            int mid = left + (right-left)/2;
+            if(arr.get(mid)<arr.get(right)){
+                if(arr.get(mid)<ans){
+                    ans = arr.get(mid);
+                    totalRot = mid;
                 }
-                
-                break; // Break the loop as the minimum element is found
-            }
-    
-            // Check if the left part of the array (from low to mid) is sorted
-            if (arr.get(low) <= arr.get(mid)) {
-                // If sorted, check if the element at low is the minimum so far
-                if (arr.get(low) < ans) {
-                    index = low; // Update the rotation index
-                    ans = arr.get(low); // Update the minimum value found
+                right = mid -1;
+            }else{
+                if(arr.get(left)<ans){
+                    ans = arr.get(left);
+                    totalRot = left;
                 }
-                
-                // Move the low pointer to mid + 1, discarding the left part
-                low = mid + 1;
-            } else {
-                // If the right part of the array (from mid to high) is sorted
-                // Check if the element at mid is the minimum so far
-                if (arr.get(mid) < ans) {
-                    index = mid; // Update the rotation index
-                    ans = arr.get(mid); // Update the minimum value found
-                }
-                
-                // Move the high pointer to mid - 1, discarding the right part
-                high = mid - 1;
+                left = mid +1;
             }
         }
-    
-        // Return the index of the smallest element, which represents the rotation count
-        return index;
+        return (totalRot);
     }
 }
