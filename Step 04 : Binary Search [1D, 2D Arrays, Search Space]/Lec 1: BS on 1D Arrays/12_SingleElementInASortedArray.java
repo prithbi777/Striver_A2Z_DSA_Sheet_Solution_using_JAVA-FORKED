@@ -102,39 +102,70 @@ class Solution {
     }
     */
 
-    // 5th Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
-    public int singleNonDuplicate(int[] nums) {
+//     // 5th Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     public int singleNonDuplicate(int[] nums) {
 
-        // Initialize left pointer to the start of the array
-        int left = 0;
+//         // Initialize left pointer to the start of the array
+//         int left = 0;
         
-        // Initialize right pointer to the end of the array
-        int right = nums.length - 1;
+//         // Initialize right pointer to the end of the array
+//         int right = nums.length - 1;
 
-        // Perform binary search until left pointer meets the right pointer
-        while (left < right) {
+//         // Perform binary search until left pointer meets the right pointer
+//         while (left < right) {
 
-            // Calculate mid-point to split the array
-            int mid = left + (right - left) / 2;
+//             // Calculate mid-point to split the array
+//             int mid = left + (right - left) / 2;
 
-            // If mid is odd, adjust it to be even for proper pair checking
-            if (mid % 2 == 1) {
-                mid--;
+//             // If mid is odd, adjust it to be even for proper pair checking
+//             if (mid % 2 == 1) {
+//                 mid--;
+//             }
+
+//             // Check if the current mid element is paired with the next element
+//             if (nums[mid] == nums[mid + 1]) {
+//                 // If mid element is paired with the next, move left pointer to mid + 2
+//                 // to search in the right half
+//                 left = mid + 2;
+//             } else {
+//                 // If mid element is not paired, the unique element is in the left half
+//                 // Move the right pointer to mid
+//                 right = mid;
+//             }
+//         }
+
+//         // Return the element at the left pointer, which is the unique element
+//         return nums[left];
+//     }
+// }
+
+
+
+
+
+//6th approach using binary search(diff code)
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int n = nums.length;
+        if(n==1) return nums[0];
+        if(nums[0]!=nums[1]) return nums[0];
+        if (nums[n-1]!=nums[n-2]) return nums[n-1];
+        int left=1, right = n-2;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1]){
+                return nums[mid];
+            }else if(mid%2==1 && nums[mid]==nums[mid-1]){
+                left = mid +1;
+            }else if(mid%2==0 && nums[mid]==nums[mid+1]){
+                left = mid+1;
+            }else{
+                right = mid -1;
             }
 
-            // Check if the current mid element is paired with the next element
-            if (nums[mid] == nums[mid + 1]) {
-                // If mid element is paired with the next, move left pointer to mid + 2
-                // to search in the right half
-                left = mid + 2;
-            } else {
-                // If mid element is not paired, the unique element is in the left half
-                // Move the right pointer to mid
-                right = mid;
-            }
         }
 
-        // Return the element at the left pointer, which is the unique element
-        return nums[left];
+
+        return 0;
     }
 }
