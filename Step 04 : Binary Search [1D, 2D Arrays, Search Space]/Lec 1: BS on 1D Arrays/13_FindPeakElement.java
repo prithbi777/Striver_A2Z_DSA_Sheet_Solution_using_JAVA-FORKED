@@ -20,31 +20,57 @@ class Solution {
     }
     */
 
-    // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
-    public int findPeakElement(int[] nums) {
-        // Initialize left pointer to the start of the array
-        int left = 0;
+//     // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     public int findPeakElement(int[] nums) {
+//         // Initialize left pointer to the start of the array
+//         int left = 0;
         
-        // Initialize right pointer to the end of the array
-        int right = nums.length - 1;
+//         // Initialize right pointer to the end of the array
+//         int right = nums.length - 1;
         
-        // Perform binary search until left pointer meets the right pointer
-        while (left < right) {
-            // Calculate the middle index to divide the search range
-            int mid = left + (right - left) / 2; 
+//         // Perform binary search until left pointer meets the right pointer
+//         while (left < right) {
+//             // Calculate the middle index to divide the search range
+//             int mid = left + (right - left) / 2; 
             
-            // Compare the middle element with the next element
-            if (nums[mid] > nums[mid + 1]) {
-                // If the middle element is greater, the peak is in the left half, including mid
-                right = mid; // Adjust the right boundary to mid
-            } else {
-                // If the middle element is not greater, the peak is in the right half
-                left = mid + 1; // Adjust the left boundary to mid + 1
+//             // Compare the middle element with the next element
+//             if (nums[mid] > nums[mid + 1]) {
+//                 // If the middle element is greater, the peak is in the left half, including mid
+//                 right = mid; // Adjust the right boundary to mid
+//             } else {
+//                 // If the middle element is not greater, the peak is in the right half
+//                 left = mid + 1; // Adjust the left boundary to mid + 1
+//             }
+//         }
+        
+//         // When left equals right, the peak element is found at this index
+//         return left;
+//     }
+
+// }
+
+
+
+
+
+    //3rd approach using binary search(diff code)
+    class Solution {
+    public int findPeakElement(int[] nums) {
+        int n = nums.length;
+        if(n==1) return 0;
+        if(nums[0]>nums[1]) return 0;
+        if(nums[n-1]>nums[n-2]) return n-1;
+        int left = 1, right = n-2;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]>nums[mid-1] && nums[mid]>nums[mid+1]){
+               return mid;
+            }else if(nums[mid]>nums[mid-1]){
+                left = mid+1;
+            }else{
+                right = mid -1;
             }
         }
-        
-        // When left equals right, the peak element is found at this index
-        return left;
+        return 0;
     }
-
 }
