@@ -65,43 +65,94 @@ class Solution {
     }
     */
 
-    // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(n * log(max(bloomDay[]) - min(bloomDay[]) + 1)), Space Complexity = O(1)
-    public int minDays(int[] bloomDay, int m, int k) {
+//     // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(n * log(max(bloomDay[]) - min(bloomDay[]) + 1)), Space Complexity = O(1)
+//     public int minDays(int[] bloomDay, int m, int k) {
         
-        // Calculate the total number of flowers needed to make 'm' bouquets
-        long totalFlowersNeeded = (long) m * k;
+//         // Calculate the total number of flowers needed to make 'm' bouquets
+//         long totalFlowersNeeded = (long) m * k;
         
-        // If the total flowers needed exceeds the total flowers available, return -1 (impossible case)
-        if (totalFlowersNeeded > bloomDay.length) {
-            return -1;
-        }
+//         // If the total flowers needed exceeds the total flowers available, return -1 (impossible case)
+//         if (totalFlowersNeeded > bloomDay.length) {
+//             return -1;
+//         }
         
-        // Initialize the minimum and maximum bloom days
-        int minDay = Integer.MAX_VALUE;
-        int maxDay = Integer.MIN_VALUE;
+//         // Initialize the minimum and maximum bloom days
+//         int minDay = Integer.MAX_VALUE;
+//         int maxDay = Integer.MIN_VALUE;
 
-        // Find the minimum and maximum bloom days
-        for (int i = 0; i < bloomDay.length; i++) {
-            minDay = Math.min(minDay, bloomDay[i]);
-            maxDay = Math.max(maxDay, bloomDay[i]);
-        }
+//         // Find the minimum and maximum bloom days
+//         for (int i = 0; i < bloomDay.length; i++) {
+//             minDay = Math.min(minDay, bloomDay[i]);
+//             maxDay = Math.max(maxDay, bloomDay[i]);
+//         }
 
-        // Binary search for the minimum day where it's possible to make 'm' bouquets
-        int low = minDay;
-        int high = maxDay;
+//         // Binary search for the minimum day where it's possible to make 'm' bouquets
+//         int low = minDay;
+//         int high = maxDay;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
+//         while (low <= high) {
+//             int mid = (low + high) / 2;
 
-            // If possible to make m bouquets by mid days, search in the lower half
-            if (possible(bloomDay, mid, m, k)) {
-                high = mid - 1;
-            } else {
-                // Otherwise, search in the upper half
-                low = mid + 1;
+//             // If possible to make m bouquets by mid days, search in the lower half
+//             if (possible(bloomDay, mid, m, k)) {
+//                 high = mid - 1;
+//             } else {
+//                 // Otherwise, search in the upper half
+//                 low = mid + 1;
+//             }
+//         }
+        
+//         return low;
+//     }
+// }
+
+
+
+
+
+
+//3rd approach using bs (diff code)
+class Solution {
+    private static boolean isPossible(int[] arr, int n, int m, int k ){
+        int count = 0;
+        int check = 0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]<=n){
+                count++;
+            }else{
+                check += (count/k);
+                count = 0;
             }
         }
-        
-        return low;
+        check += (count/k);
+        return check>=m;
+    }
+    private static int[] findMinMax(int[] bloomDay){
+        int[] ans = new int[2];
+        int min=Integer.MAX_VALUE;
+        int max=Integer.MIN_VALUE;
+        for(int val: bloomDay){
+            max = Math.max(val, max);
+            min = Math.min(val, min);
+        }
+        ans[0] = min;
+        ans[1] = max;
+        return ans;
+    }
+    public int minDays(int[] bloomDay, int m, int k) {
+        if(bloomDay.length<m*k) return (-1);
+        int min = findMinMax(bloomDay)[0];
+        int max = findMinMax(bloomDay)[1];
+        int answer = -1;
+        while(min<=max){
+            int mid = min +(max-min)/2;
+            if(isPossible(bloomDay, mid, m, k)){
+                answer = mid;
+                max = mid-1;
+            }else{
+                min = mid+1;
+            }
+        }
+        return (answer);
     }
 }
