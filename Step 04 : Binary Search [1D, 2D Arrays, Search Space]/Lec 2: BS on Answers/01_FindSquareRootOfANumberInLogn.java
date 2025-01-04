@@ -50,35 +50,56 @@ class Solution {
     */
     
     
-    // 4th Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
-    long floorSqrt(long n) {
-        // Initialize start, end, and result variables
-        long st = 0, end = n, ans = 0;
+//     // 4th Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(log(n)), Space Complexity = O(1)
+//     long floorSqrt(long n) {
+//         // Initialize start, end, and result variables
+//         long st = 0, end = n, ans = 0;
     
-        // Perform binary search to find the floor of the square root
-        while(st <= end) { 
-            // Calculate the middle element to avoid overflow
-            long mid = st + (end - st) / 2;  
+//         // Perform binary search to find the floor of the square root
+//         while(st <= end) { 
+//             // Calculate the middle element to avoid overflow
+//             long mid = st + (end - st) / 2;  
             
-            // Calculate the square of the middle element
-            long square = mid * mid; 
+//             // Calculate the square of the middle element
+//             long square = mid * mid; 
             
-            // If square of mid is equal to n, return mid as the square root
-            if(square == n) { 
-                return mid;
-            } 
-            // If square of mid is greater than n, reduce the search space
-            else if (square > n) { 
-                end = mid - 1; 
-            } 
-            // If square of mid is less than n, update ans and move to the right half
-            else { 
-                ans = mid; 
-                st = mid + 1; 
+//             // If square of mid is equal to n, return mid as the square root
+//             if(square == n) { 
+//                 return mid;
+//             } 
+//             // If square of mid is greater than n, reduce the search space
+//             else if (square > n) { 
+//                 end = mid - 1; 
+//             } 
+//             // If square of mid is less than n, update ans and move to the right half
+//             else { 
+//                 ans = mid; 
+//                 st = mid + 1; 
+//             }
+//         }
+        
+//         // Return the largest integer whose square is less than or equal to n
+//         return ans;
+//     }
+// }
+
+
+
+
+
+
+//5th approach using bs(diff code)
+class Solution {
+    int floorSqrt(int n) {
+        int left =1, right = n;
+        while (left<=right) {
+            int mid = left + (right-left)/2;
+            if(mid*mid<=n){
+                left = mid +1;
+            }else{
+                right = mid -1;
             }
         }
-        
-        // Return the largest integer whose square is less than or equal to n
-        return ans;
+       return (right);
     }
 }
