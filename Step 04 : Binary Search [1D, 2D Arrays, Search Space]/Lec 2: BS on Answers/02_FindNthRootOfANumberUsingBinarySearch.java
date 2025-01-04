@@ -78,62 +78,86 @@ class Solution {
     }
     */
     
-    // Function to compute mid^n and compare it with m
-    public static int computePowerAndCompare(int base, int exponent, int target) {
-        // Initialize result to 1 (base^0)
-        long result = 1; 
+//     // Function to compute mid^n and compare it with m
+//     public static int computePowerAndCompare(int base, int exponent, int target) {
+//         // Initialize result to 1 (base^0)
+//         long result = 1; 
         
-        // Compute base^exponent
-        for (int i = 1; i <= exponent; i++) {
-            // Multiply result by base
-            result *= base; 
+//         // Compute base^exponent
+//         for (int i = 1; i <= exponent; i++) {
+//             // Multiply result by base
+//             result *= base; 
             
-            // If result exceeds target, return 2 indicating result is too large
-            if (result > target) {
-                return 2;
-            }
-        }
+//             // If result exceeds target, return 2 indicating result is too large
+//             if (result > target) {
+//                 return 2;
+//             }
+//         }
         
-        // If result equals target, return 1 indicating a match
-        if (result == target) {
-            return 1;
-        }
+//         // If result equals target, return 1 indicating a match
+//         if (result == target) {
+//             return 1;
+//         }
         
-        // If result is less than target, return 0 indicating result is too small
-        return 0;
-    }
+//         // If result is less than target, return 0 indicating result is too small
+//         return 0;
+//     }
     
-    // 3rd Approach: Optimal Approach(Using Binary Search - Time Complexity = O(n * log(m)), Space Complexity = O(1)
-    public static int NthRoot(int n, int m) {
-        // Start of the search range
-        int low = 1; 
+//     // 3rd Approach: Optimal Approach(Using Binary Search - Time Complexity = O(n * log(m)), Space Complexity = O(1)
+//     public static int NthRoot(int n, int m) {
+//         // Start of the search range
+//         int low = 1; 
         
-        // End of the search range
-        int high = m; 
+//         // End of the search range
+//         int high = m; 
     
-        // Perform binary search
-        while (low <= high) {
-            // Middle of the current range
-            int mid = (low + high) / 2; 
+//         // Perform binary search
+//         while (low <= high) {
+//             // Middle of the current range
+//             int mid = (low + high) / 2; 
             
-            // Compute mid^n and compare with m
-            int comparisonResult = computePowerAndCompare(mid, n, m); 
+//             // Compute mid^n and compare with m
+//             int comparisonResult = computePowerAndCompare(mid, n, m); 
     
-            // If mid^n equals m, return mid as the nth root
-            if (comparisonResult == 1) {
+//             // If mid^n equals m, return mid as the nth root
+//             if (comparisonResult == 1) {
+//                 return mid;
+//             }
+//             // If mid^n is less than m, move the lower bound up
+//             else if (comparisonResult == 0) {
+//                 low = mid + 1;
+//             }
+//             // If mid^n is greater than m, move the upper bound down
+//             else {
+//                 high = mid - 1;
+//             }
+//         }
+    
+//         // If no integer x satisfies x^n == m, return -1
+//         return -1;
+//     }
+// }
+
+
+
+
+
+
+
+//4th approach using bs(diff code)
+class Solution {
+    public int nthRoot(int n, int m) {
+     int left = 1, right = m;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if((int)Math.pow(mid, n) == m){
                 return mid;
-            }
-            // If mid^n is less than m, move the lower bound up
-            else if (comparisonResult == 0) {
-                low = mid + 1;
-            }
-            // If mid^n is greater than m, move the upper bound down
-            else {
-                high = mid - 1;
+            }else if((int)Math.pow(mid, n)<m){
+                left = mid+1;
+            }else{
+                right = mid-1;
             }
         }
-    
-        // If no integer x satisfies x^n == m, return -1
         return -1;
     }
 }
