@@ -36,41 +36,80 @@ class Solution {
     }
     */
 
-    // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(n * log(max(nums))), Space Complexity = O(1)
+//     // 2nd Approach: Optimal Approach (Using Binary Search) - Time Complexity = O(n * log(max(nums))), Space Complexity = O(1)
+//     public int smallestDivisor(int[] nums, int threshold) {
+//         // Initialize the maximum value to the smallest possible integer
+//         int maxVal = Integer.MIN_VALUE;  
+
+//         // Loop through the array to find the maximum value
+//         for (int num : nums) {
+//             maxVal = Math.max(maxVal, num);  // Update maxVal to the maximum number in the array
+//         }
+
+//         // Initialize binary search boundaries
+//         int left = 1;          // The smallest possible divisor
+//         int right = maxVal;    // The largest possible divisor
+//         int result = maxVal;   // Initialize result with the maximum possible value
+
+//         // Perform binary search
+//         while (left <= right) {
+//             int mid = left + (right - left) / 2;  // Calculate the middle value to check as a potential divisor
+
+//             // Calculate the sum of division results with the current mid as the divisor
+//             int sum = 0;
+//             for (int num : nums) {
+//                 sum += Math.ceil((double) num / mid);  // Add the division result to the sum, rounded up
+//             }
+
+//             // Check if the calculated sum is within the threshold
+//             if (sum <= threshold) {
+//                 result = mid;    // Update result to the current mid since it's a valid divisor
+//                 right = mid - 1; // Try to find a smaller valid divisor by moving the right boundary
+//             } else {
+//                 left = mid + 1;  // If sum exceeds the threshold, increase the divisor by moving the left boundary
+//             }
+//         }
+
+//         // Return the smallest valid divisor found
+//         return result;
+//     }
+// }
+
+
+
+
+
+
+    //3rd approach using bs(diff code)
+    class Solution {
+    private static int findMax(int[] arr){
+        int max = Integer.MIN_VALUE;
+        for(int val:arr){
+            max = Math.max(max, val);
+        }
+        return max;
+    }
+       
+    private static int checkThreshold(int[] nums, int n){
+        int totalThreshold = 0;
+        for(int val: nums){
+            totalThreshold += Math.ceil((double)val/(double)n);
+        }
+        return totalThreshold;
+    }
     public int smallestDivisor(int[] nums, int threshold) {
-        // Initialize the maximum value to the smallest possible integer
-        int maxVal = Integer.MIN_VALUE;  
-
-        // Loop through the array to find the maximum value
-        for (int num : nums) {
-            maxVal = Math.max(maxVal, num);  // Update maxVal to the maximum number in the array
-        }
-
-        // Initialize binary search boundaries
-        int left = 1;          // The smallest possible divisor
-        int right = maxVal;    // The largest possible divisor
-        int result = maxVal;   // Initialize result with the maximum possible value
-
-        // Perform binary search
-        while (left <= right) {
-            int mid = left + (right - left) / 2;  // Calculate the middle value to check as a potential divisor
-
-            // Calculate the sum of division results with the current mid as the divisor
-            int sum = 0;
-            for (int num : nums) {
-                sum += Math.ceil((double) num / mid);  // Add the division result to the sum, rounded up
-            }
-
-            // Check if the calculated sum is within the threshold
-            if (sum <= threshold) {
-                result = mid;    // Update result to the current mid since it's a valid divisor
-                right = mid - 1; // Try to find a smaller valid divisor by moving the right boundary
-            } else {
-                left = mid + 1;  // If sum exceeds the threshold, increase the divisor by moving the left boundary
+        int right = findMax(nums);
+        int left = 1;
+        int ans = -1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(checkThreshold(nums, mid)<=threshold){
+                ans = mid;
+                right = mid -1;
+            }else{
+                left = mid+1;
             }
         }
-
-        // Return the smallest valid divisor found
-        return result;
+        return (ans);
     }
 }
