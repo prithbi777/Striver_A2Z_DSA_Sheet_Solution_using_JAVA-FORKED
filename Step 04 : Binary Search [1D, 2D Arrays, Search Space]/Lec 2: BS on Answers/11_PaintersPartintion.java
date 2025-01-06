@@ -82,3 +82,51 @@ public class Solution {
         return low;
     }
 }
+
+
+
+
+
+//MINE
+import java.util.*;
+
+public class Solution 
+{
+    //CREATE FUNCTIONS AFTER THIS!
+     private static boolean isPos(int[] nums , int mid , int stds){
+        int countStds = 1;
+        long totalNow = 0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]+totalNow <=mid){
+                totalNow += nums[i];
+            }else{
+                totalNow = nums[i];
+                countStds++;
+            }
+        }
+        return countStds<=stds;
+    }
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k)
+    {
+        int i =0;
+        int[] nums = new int[boards.size()];
+        for(int val:boards){
+            nums[i] = val;
+            i++;
+        }
+        int left = Integer.MIN_VALUE, right = 0;
+        for(int val:nums){
+            left = Math.max(val, left);
+            right += val;
+        }
+        while(left<=right){
+            int mid = left + (right - left)/2;
+            if(isPos(nums, mid, k)){
+                right = mid - 1;
+            }else{
+                left = mid +1;
+            }
+        }
+        return (left);
+    }
+}
