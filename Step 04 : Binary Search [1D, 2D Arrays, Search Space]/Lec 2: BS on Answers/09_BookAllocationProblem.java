@@ -4,31 +4,31 @@
 import java.util.*;
 
 public class Solution {
-    // Method to count how many students are required if each student can be allocated at most 'pages' number of pages.
-    public static int countStudents(ArrayList<Integer> arr, int pages) {
+    // // Method to count how many students are required if each student can be allocated at most 'pages' number of pages.
+    // public static int countStudents(ArrayList<Integer> arr, int pages) {
 
-        // Start with one student
-        int students = 1; 
+    //     // Start with one student
+    //     int students = 1; 
 
-        // Tracks the current number of pages allocated to a student
-        long pagesStudent = 0; 
+    //     // Tracks the current number of pages allocated to a student
+    //     long pagesStudent = 0; 
 
-        // Iterate through each book in the array
-        for (int i = 0; i < arr.size(); i++) {
+    //     // Iterate through each book in the array
+    //     for (int i = 0; i < arr.size(); i++) {
 
-            // If adding the current book to the student's allocation doesn't exceed the limit
-            if (pagesStudent + arr.get(i) <= pages) {
-                pagesStudent += arr.get(i); // Add the book to the current student's allocation
-            } else {
-                // If the limit is exceeded, allocate the book to a new student
-                students++;
-                pagesStudent = arr.get(i); // Start counting pages for the new student
-            }
-        }
+    //         // If adding the current book to the student's allocation doesn't exceed the limit
+    //         if (pagesStudent + arr.get(i) <= pages) {
+    //             pagesStudent += arr.get(i); // Add the book to the current student's allocation
+    //         } else {
+    //             // If the limit is exceeded, allocate the book to a new student
+    //             students++;
+    //             pagesStudent = arr.get(i); // Start counting pages for the new student
+    //         }
+    //     }
         
-        // Return the total number of students required
-        return students;
-    }
+    //     // Return the total number of students required
+    //     return students;
+    // }
 
     /*
     // 1st Approach: Brute Force Approach: Time Complexity = O(n * (sum(arr[]) - max(arr[])+1)), Space Complexity = O(1)
@@ -59,35 +59,81 @@ public class Solution {
     */
 
 
-    // 2nd Approach: Optimal Approach (Using Binary Search): Time Complexity = O(n * log(sum(arr[]) - max(arr[])+1)), Space Complexity = O(1)
-    public static int findPages(ArrayList<Integer> arr, int n, int m) {
+//     // 2nd Approach: Optimal Approach (Using Binary Search): Time Complexity = O(n * log(sum(arr[]) - max(arr[])+1)), Space Complexity = O(1)
+//     public static int findPages(ArrayList<Integer> arr, int n, int m) {
         
-        // If there are more students than books, it's impossible to allocate, so return -1
-        if (m > n)
-            return -1;
+//         // If there are more students than books, it's impossible to allocate, so return -1
+//         if (m > n)
+//             return -1;
 
-        // Determine the lower bound for binary search (maximum pages in a single book)
-        int low = Collections.max(arr);
+//         // Determine the lower bound for binary search (maximum pages in a single book)
+//         int low = Collections.max(arr);
         
-        // Determine the upper bound for binary search (sum of all pages in the array)
-        int high = arr.stream().mapToInt(Integer::intValue).sum();
+//         // Determine the upper bound for binary search (sum of all pages in the array)
+//         int high = arr.stream().mapToInt(Integer::intValue).sum();
 
-        // Implement binary search to find the minimum feasible 'maximum pages' that can be allocated
-        while (low <= high) {
-            int mid = low + (high - low) / 2;  // Middle point between low and high
+//         // Implement binary search to find the minimum feasible 'maximum pages' that can be allocated
+//         while (low <= high) {
+//             int mid = low + (high - low) / 2;  // Middle point between low and high
             
-            int requiredStudents = countStudents(arr, mid);  // Calculate required students for current mid
+//             int requiredStudents = countStudents(arr, mid);  // Calculate required students for current mid
 
-            if (requiredStudents <= m) {
-                // If the required students are less than or equal to available students, try for a smaller value
-                high = mid - 1;
-            } else {
-                // If more students are required, increase the minimum feasible pages
-                low = mid + 1;
+//             if (requiredStudents <= m) {
+//                 // If the required students are less than or equal to available students, try for a smaller value
+//                 high = mid - 1;
+//             } else {
+//                 // If more students are required, increase the minimum feasible pages
+//                 low = mid + 1;
+//             }
+//         }
+        
+//         // Return the minimum number of pages that allows all students to get books
+//         return low;
+//     }
+// }
+
+
+
+
+
+    //MINE
+    import java.util.*;
+public class Solution {
+    private static boolean isPos(int[] nums , int mid , int stds){
+        int countStds = 1;
+        long totalNow = 0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]+totalNow <=mid){
+                totalNow += nums[i];
+            }else{
+                totalNow = nums[i];
+                countStds++;
             }
         }
-        
-        // Return the minimum number of pages that allows all students to get books
-        return low;
+        return countStds<=stds;
+    }
+    public static int findPages(ArrayList<Integer> arr, int n, int m) {
+        if(m>n) return -1;
+        int i=0;
+        int[] nums = new int[n];
+        for(int val:arr){
+            nums[i] = val;
+            i++;
+        }
+
+        int left = Integer.MIN_VALUE, right = 0;
+        for(int val:nums){
+            left = Math.max(val, left);
+            right += val;
+        }
+        while(left<=right){
+            int mid = left + (right - left)/2;
+            if(isPos(nums, mid, m)){
+                right = mid - 1;
+            }else{
+                left = mid +1;
+            }
+        }
+        return (left);
     }
 }
