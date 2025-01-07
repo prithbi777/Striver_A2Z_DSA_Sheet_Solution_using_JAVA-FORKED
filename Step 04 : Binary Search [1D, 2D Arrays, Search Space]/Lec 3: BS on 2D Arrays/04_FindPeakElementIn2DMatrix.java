@@ -64,3 +64,51 @@ class Solution {
         return new int[]{-1, -1}; 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//MINE
+class Solution {
+    private static int getRow(int[][] matrix, int col){
+        int max = Integer.MIN_VALUE;
+        int ansRow = -1;
+        for(int i=0;i<matrix.length;i++){
+            if(max<matrix[i][col]){
+                ansRow = i;
+                max = matrix[i][col];
+            }
+        }
+        return ansRow;
+
+    }
+    public int[] findPeakGrid(int[][] mat) {
+        int row = mat.length;
+        int col = mat[0].length;
+        int left = 0, right = col-1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            int currRow = getRow(mat, mid);
+            int leftValue = mid-1>=0? mat[currRow][mid-1]:-1;
+            int rightValue = mid+1<col? mat[currRow][mid+1]:-1;
+            if(mat[currRow][mid]>leftValue && mat[currRow][mid]>rightValue){
+                return new int[]{currRow, mid};
+            }else if(mat[currRow][mid] < leftValue){
+                right = mid -1;
+            }else{
+                left =  mid +1;
+            }
+
+        }
+
+        return new int[]{-1, -1};
+    }
+}
