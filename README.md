@@ -6,7 +6,7 @@
 ### [takeUForward Youtube Channel Link](https://www.youtube.com/@takeUforward)
 
 
-### [@@@EXTRA DSA IN JAVA PLAYLIST FOR MISSING CONTENTS@@@](https://www.youtube.com/@takeUforward)
+### [@@@EXTRA DSA IN JAVA PLAYLIST FOR MISSING CONTENTS@@@]([https://www.youtube.com/@takeUforward](https://www.youtube.com/playlist?list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ))
 
 
 
