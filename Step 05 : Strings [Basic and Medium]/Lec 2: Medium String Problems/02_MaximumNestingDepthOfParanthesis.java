@@ -22,3 +22,24 @@ class Solution {
         return maxCount;
     }
 }
+
+
+
+
+
+
+//MINE
+class Solution {
+    public int maxDepth(String s) {
+         int openCount = 0, max = 0;
+       for(char ch: s.toCharArray()){
+         if(ch=='('){
+            openCount++;
+            max = Math.max(max, openCount);
+         }else if(ch==')'){
+            openCount--;
+         }
+       }
+       return (max);
+    }
+}
