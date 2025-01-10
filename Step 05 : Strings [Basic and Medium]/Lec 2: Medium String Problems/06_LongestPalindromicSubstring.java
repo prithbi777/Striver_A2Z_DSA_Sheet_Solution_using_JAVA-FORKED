@@ -35,3 +35,92 @@ public class Solution {
         return maxStr;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MINE
+class Solution {
+
+
+    //OPTIMIZED
+    private int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+
+
+
+
+
+    // //BRUTE FORCE
+    // private boolean isPalin(String s, int i , int j){
+    //     while(i<=j){
+    //         if(s.charAt(i)!=s.charAt(j)){
+    //             return false;
+    //         }else{
+    //             i++;
+    //             j--;
+    //         }
+    //     }
+    //     return true;
+
+    // }
+
+
+
+    public String longestPalindrome(String s) {   //"babad"
+
+
+        //OPTIMIZED
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);      // Check for odd length palindrome
+            int len2 = expandAroundCenter(s, i, i + 1);  // Check for even length palindrome
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+
+
+         //BRUTE FORCE
+        // int maxLen = 0, start=0, end =0;
+        // for(int i=0;i<s.length();i++){
+        //     for(int j=i;j<s.length();j++){
+        //         if(isPalin(s,i, j)){
+        //             if(maxLen<(j-i+1)){
+        //               maxLen =(j-i+1);
+        //               start = i;
+        //               end = j;  
+        //             }
+                
+                    
+        //         }
+        //     }
+        // }
+        // return s.substring(start, end+1);
+
+
+    
+    }
+}
