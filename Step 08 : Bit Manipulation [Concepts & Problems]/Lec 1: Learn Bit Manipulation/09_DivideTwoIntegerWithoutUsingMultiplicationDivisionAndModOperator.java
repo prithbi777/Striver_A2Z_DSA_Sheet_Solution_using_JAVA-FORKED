@@ -39,3 +39,48 @@ class Solution {
         return isNegative ? -quotient : quotient;
     }
 }
+
+
+
+
+
+
+
+
+
+//   MINE
+class Solution {
+    public int divide(int dividend, int divisor) {
+         // Handle edge case where division would cause overflow
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+        long ans = 0;
+        int sign = 1;
+
+        // Determine the sign of the result
+        if ((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)) {
+            sign = -1;
+        }
+
+        // Convert dividend and divisor to positive long values to handle overflow
+        long n = Math.abs((long) dividend);
+        long m = Math.abs((long) divisor);
+
+        while (n >= m) {
+            long ct = 0;
+            // Find the highest power of two for which (m << ct) is less than or equal to n
+            while (n >= (m << ct+1)) {
+                ct++;
+            }
+
+            // Subtract the largest shifted divisor from n and update the answer
+            n = n - (m << ct);
+            ans += (1 << ct);
+        }
+
+        // Apply the sign to the result
+        return (int) (ans * sign);
+    }
+}
